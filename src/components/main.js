@@ -1,5 +1,3 @@
-'use strict';
-
 var TodoUiApp = require('./TodoUiApp');
 var React = require('react');
 var Router = require('react-router');

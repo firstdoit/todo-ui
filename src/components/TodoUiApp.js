@@ -1,9 +1,8 @@
 var $ = require('jquery');
 var React = require('react/addons');
-var ReactTransitionGroup = React.addons.TransitionGroup;
 
 // CSS
-require('normalize.css');
+require('../styles/tt-uikit-0.11.0.min.css');
 require('../styles/main.less');
 
 var api = 'https://tt-todo-api.herokuapp.com/api/todos/';

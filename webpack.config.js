@@ -11,8 +11,8 @@ module.exports = {
   debug: true,
   devtool: false,
   entry: [
-      'webpack/hot/only-dev-server',
-      './src/components/main.js'
+    'webpack/hot/only-dev-server',
+    './src/components/main.js'
   ],
 
   stats: {
@@ -49,6 +49,12 @@ module.exports = {
     }, {
       test: /\.(png|jpg)$/,
       loader: 'url-loader?limit=8192'
+    }, {
+      test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+      loader: "url-loader?limit=10000&minetype=application/font-woff"
+    }, {
+      test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+      loader: "file-loader"
     }]
   },
 
