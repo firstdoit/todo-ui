@@ -1,5 +1,8 @@
 var $ = require('jquery');
 var React = require('react/addons');
+var TodoInput = require('./TodoInput');
+var TodoItem = require('./TodoItem');
+var TodoFooter = require('./TodoFooter');
 
 // CSS
 require('../styles/tt-uikit-0.11.0.min.css');
@@ -7,10 +10,11 @@ require('../styles/main.less');
 
 var api = 'https://tt-todo-api.herokuapp.com/api/todos/';
 
-var TodoUiApp = React.createClass({
+var TodoApp = React.createClass({
   getInitialState: function() {
     return {
-      todos: []
+      todos: [],
+      newTitle: ''
     };
   },
 
@@ -27,23 +31,26 @@ var TodoUiApp = React.createClass({
     $.get(api, success.bind(this));
   },
 
-  renderTodo: function(c) {
-    return (
-      <li>{c.title}</li>
-    );
-  },
-
   render: function() {
-    var todoNodes = this.state.todos.map(this.renderTodo);
+    var todoNodes = this.state.todos.map(function(t) {
+      return <TodoItem title={t.title} done={t.done}/>;
+    });
 
     return (
       <div className='main'>
+        <header>
+          <h1>Todos</h1>
+        </header>
+        <hr/>
+        <TodoInput newTitle={this.state.newTitle} />
         <ul>
           {todoNodes}
         </ul>
+        <hr/>
+        <TodoFooter todos={this.state.todos}/>
       </div>
     );
   }
 });
 
-module.exports = TodoUiApp;
+module.exports = TodoApp;

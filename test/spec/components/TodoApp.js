@@ -1,6 +1,6 @@
 'use strict';
 
-describe('TodoUiApp', function () {
+describe('TodoApp', function () {
   var React = require('react/addons');
   var TodoUiApp, component;
 
@@ -9,11 +9,11 @@ describe('TodoUiApp', function () {
     container.id = 'content';
     document.body.appendChild(container);
 
-    TodoUiApp = require('components/TodoUiApp.js');
+    TodoUiApp = require('components/TodoApp.js');
     component = React.createElement(TodoUiApp);
   });
 
-  it('should create a new instance of TodoUiApp', function () {
+  it('should create a new instance of TodoApp', function () {
     expect(component).toBeDefined();
   });
 });
