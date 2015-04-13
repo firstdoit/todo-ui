@@ -26,11 +26,21 @@ var TodoUiApp = React.createClass({
 
     $.get(api, success.bind(this));
   },
+
+  renderTodo: function(c) {
+    return (
+      <li>{c.title}</li>
+    );
+  },
+
   render: function() {
+    var todoNodes = this.state.todos.map(this.renderTodo);
+
     return (
       <div className='main'>
-        <span>Hej, världen!</span>
-        <span>{this.state.todos}</span>
+        <ul>
+          {todoNodes}
+        </ul>
       </div>
     );
   }
