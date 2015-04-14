@@ -16,7 +16,7 @@ var TodoItem = React.createClass({
             type="checkbox"
             ref="checkbox"
             id={'todo-' + this.props.id}
-            value={this.props.done}/>
+            checked={this.props.done}/>
           <label htmlFor={'todo-' + this.props.id}>{this.props.title}</label>
         </div>
       </li>

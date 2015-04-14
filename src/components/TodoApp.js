@@ -46,11 +46,21 @@ var TodoApp = React.createClass({
   },
 
   handleCheck: function(todoId, checked) {
-    var todos = this.state.todos;
-    todos.forEach(function(t){
+    var todos = this.state.todos.map(function(t) {
       if (t.id === todoId) {
         t.done = checked;
       }
+      return t;
+    });
+    this.setState({
+      todos: todos
+    });
+  },
+
+  handleCheckAll: function() {
+    var todos = this.state.todos.map(function(t) {
+      t.done = true;
+      return t;
     });
     this.setState({
       todos: todos
@@ -80,7 +90,8 @@ var TodoApp = React.createClass({
         {todoNodes}
         </ul>
         <hr className="row"/>
-        <TodoFooter todos={this.state.todos}/>
+        <TodoFooter todos={this.state.todos}
+          onCheckAll={this.handleCheckAll}/>
       </div>
     );
   }
