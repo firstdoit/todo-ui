@@ -30,10 +30,42 @@ var TodoApp = React.createClass({
     $.get(api, success.bind(this));
   },
 
+  handleInput: function(newTitle) {
+    this.setState({
+      newTitle: newTitle
+    });
+  },
+
+  handleSubmit: function() {
+    var todos = this.state.todos;
+    todos.push({title: this.state.newTitle});
+    this.setState({
+      todos: todos,
+      newTitle: ''
+    });
+  },
+
+  handleCheck: function(todoId, checked) {
+    var todos = this.state.todos;
+    todos.forEach(function(t){
+      if (t.id === todoId) {
+        t.done = checked;
+      }
+    });
+    this.setState({
+      todos: todos
+    });
+  },
+
   render: function() {
     var todoNodes = this.state.todos.map(function(t) {
-      return <TodoItem title={t.title} done={t.done} id={t.id} />;
-    });
+      return (
+        <TodoItem title={t.title}
+          done={t.done}
+          id={t.id}
+          onCheck={this.handleCheck}/>
+      );
+    }.bind(this));
 
     return (
       <div className='container main'>
@@ -41,7 +73,9 @@ var TodoApp = React.createClass({
           <h1>Todos</h1>
         </header>
         <hr className="row"/>
-        <TodoInput newTitle={this.state.newTitle} />
+        <TodoInput newTitle={this.state.newTitle}
+          onTitleInput={this.handleInput}
+          onTitleSubmit={this.handleSubmit}/>
         <ul className="row">
         {todoNodes}
         </ul>
