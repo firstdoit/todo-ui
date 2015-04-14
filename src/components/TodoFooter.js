@@ -9,10 +9,13 @@ var TodoFooter = React.createClass({
   },
 
   render: function() {
+    var openTodos = this.props.todos.filter(function(t) {
+      return t.done == false;
+    });
     return (
       <div className="todo-footer row">
         <div className="col-xs-12">
-          <span className="remaining pull-left">{this.props.todos.length} items left</span>
+          <span className="remaining pull-left">{openTodos.length} items left</span>
 
           <button onClick={this.handleClick} className="btn btn-link pull-right">Mark all as complete</button>
         </div>
