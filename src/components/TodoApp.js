@@ -38,7 +38,8 @@ var TodoApp = React.createClass({
 
   handleSubmit: function() {
     var todos = this.state.todos;
-    todos.push({title: this.state.newTitle});
+    var newId = todos[todos.length-1].id + 1;
+    todos.push({title: this.state.newTitle, id: newId});
     this.setState({
       todos: todos,
       newTitle: ''
