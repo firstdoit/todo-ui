@@ -30,7 +30,6 @@ module.exports = (grunt) ->
 
     open:
       options: delay: 500
-      dev: path: 'http://localhost:<%= connect.options.port %>/webpack-dev-server/'
       dist: path: 'http://localhost:<%= connect.options.port %>/'
 
     karma:
@@ -66,7 +65,7 @@ module.exports = (grunt) ->
     build: ['clean', 'copy', 'webpack']
     test: ['karma']
     prod: ['build', 'open:dist', 'connect:dist']
-    default: ['open:dev', 'webpack-dev-server']
+    default: ['open:dist', 'webpack-dev-server']
 
   # Project configuration.
   grunt.config.init config
