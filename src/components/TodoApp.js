@@ -42,7 +42,11 @@ var TodoApp = React.createClass({
     }
     var todos = this.state.todos;
     var newId = todos[todos.length-1].id + 1;
-    todos.push({title: this.state.newTitle, id: newId});
+    todos.push({
+      title: this.state.newTitle,
+      id: newId,
+      done: false
+    });
     this.setState({
       todos: todos,
       newTitle: ''
