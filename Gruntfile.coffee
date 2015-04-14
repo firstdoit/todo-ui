@@ -68,10 +68,16 @@ module.exports = (grunt) ->
           src: [ '<%= pkg.dist %>' ]
         } ]
 
+    'gh-pages':
+      options:
+        base: '<%= pkg.dist %>'
+      src: ['**']
+
   tasks =
     build: ['clean', 'copy', 'webpack']
     test: ['karma']
     prod: ['build', 'open:dist', 'connect:dist']
+    deploy: ['build', 'gh-pages']
     default: ['open:dist', 'webpack-dev-server']
 
   # Project configuration.
