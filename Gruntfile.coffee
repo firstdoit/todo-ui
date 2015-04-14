@@ -53,6 +53,13 @@ module.exports = (grunt) ->
             dest: '<%= pkg.dist %>/images/'
           }
         ]
+        options:
+          processContentExclude: ['**/*.{png,gif,jpg,ico,psd,ttf,otf,woff,svg}']
+          process: (src, srcpath) ->
+            if 'src/index.html' is srcpath
+              console.log srcpath
+              src = src.replace(new RegExp("\<\!\-\-remove\-\-\>(.|\n)*\<\!\-\-\/remove\-\-\>"), "")
+            return src
 
     clean:
       dist:
