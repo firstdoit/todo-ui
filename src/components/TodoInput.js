@@ -10,8 +10,9 @@ var TodoInput = React.createClass({
     );
   },
 
-  handleSubmit: function() {
+  handleSubmit: function(e) {
     this.props.onTitleSubmit();
+    e.preventDefault();
   },
 
   render: function() {
