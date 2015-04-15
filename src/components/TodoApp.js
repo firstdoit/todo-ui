@@ -1,14 +1,14 @@
 var $ = window.jQuery = require('jquery');
+var _ = require('underscore');
 var React = require('react/addons');
 var TodoInput = require('./TodoInput');
 var TodoItem = require('./TodoItem');
 var TodoFooter = require('./TodoFooter');
+var TodoAPI = require('./TodoAPI');
 
 // CSS
 require('../styles/tt-uikit-0.11.0.min.css');
 require('../styles/main.less');
-
-var api = 'https://tt-todo-api.herokuapp.com/api/todos/';
 
 var TodoApp = React.createClass({
   getInitialState: function() {
@@ -18,16 +18,14 @@ var TodoApp = React.createClass({
     };
   },
 
+  onTodoList: function(todos) {
+    this.setState({
+      todos: todos
+    });
+  },
+
   componentDidMount: function() {
-    var success = function(result) {
-      console.log(result);
-      if (this.isMounted()) {
-        this.setState({
-          todos: result.todos
-        });
-      }
-    };
-    $.get(api, success.bind(this));
+    TodoAPI.listTodos().done(this.onTodoList);
   },
 
   handleInput: function(newTitle) {
@@ -37,7 +35,7 @@ var TodoApp = React.createClass({
   },
 
   handleSubmit: function() {
-    if (this.state.newTitle == '') {
+    if (this.state.newTitle === '') {
       return;
     }
     var todos = this.state.todos;
@@ -54,19 +52,31 @@ var TodoApp = React.createClass({
   },
 
   handleCheck: function(todoId, checked) {
-    var todos = this.state.todos.map(function(t) {
-      if (t.id === todoId) {
-        t.done = checked;
-      }
-      return t;
+    var updateTodo = function(c) {
+      var todos = _.map(this.state.todos, function(t) {
+        if (t.id === todoId) {
+          t.done = c;
+        }
+        return t;
+      });
+      this.setState({
+        todos: todos
+      });
+    }.bind(this);
+
+    // Send update to server
+    TodoAPI.setTodoDone(todoId, checked).fail(function(reason) {
+      console.log('Updating todo ' + todoId + ' failed', reason);
+      // Revert in case of problems
+      updateTodo(!checked)
     });
-    this.setState({
-      todos: todos
-    });
+
+    // Update UI synchronously
+    updateTodo(checked);
   },
 
   handleCheckAll: function() {
-    var todos = this.state.todos.map(function(t) {
+    var todos = _.map(this.state.todos, function(t) {
       t.done = true;
       return t;
     });
@@ -76,10 +86,11 @@ var TodoApp = React.createClass({
   },
 
   render: function() {
-    var todoNodes = this.state.todos.map(function(t) {
+    var todoNodes = _.map(this.state.todos, function(t) {
       return (
         <TodoItem title={t.title}
           done={t.done}
+          key={t.id}
           id={t.id}
           onCheck={this.handleCheck}/>
       );

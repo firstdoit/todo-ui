@@ -1,4 +1,5 @@
 var React = require('react/addons');
+var _ = require('underscore');
 
 // CSS
 require('../styles/todo-footer.less');
@@ -9,8 +10,8 @@ var TodoFooter = React.createClass({
   },
 
   render: function() {
-    var openTodos = this.props.todos.filter(function(t) {
-      return t.done == false;
+    var openTodos = _.filter(this.props.todos, function(t) {
+      return t.done === false;
     });
     return (
       <div className="todo-footer row">

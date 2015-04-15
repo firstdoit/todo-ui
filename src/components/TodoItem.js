@@ -5,7 +5,7 @@ require('../styles/todo-item.less');
 
 var TodoItem = React.createClass({
   handleCheck: function () {
-    this.props.onCheck(this.props.id, this.refs.checkbox.getDOMNode().checked)
+    this.props.onCheck(this.props.id, this.refs.checkbox.getDOMNode().checked);
   },
 
   render: function() {
