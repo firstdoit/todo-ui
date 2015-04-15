@@ -38,17 +38,12 @@ var TodoApp = React.createClass({
     if (this.state.newTitle === '') {
       return;
     }
-    var todos = this.state.todos;
-    var newId = todos[todos.length-1].id + 1;
-    todos.push({
-      title: this.state.newTitle,
-      id: newId,
-      done: false
-    });
-    this.setState({
-      todos: todos,
-      newTitle: ''
-    });
+    TodoAPI.createTodo(this.state.newTitle).done(function(todos) {
+      this.setState({
+        todos: todos,
+        newTitle: ''
+      });
+    }.bind(this));
   },
 
   handleCheck: function(todoId, checked) {

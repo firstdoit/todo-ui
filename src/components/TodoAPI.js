@@ -13,6 +13,21 @@ var listTodos = function() {
   });
 };
 
+var createTodo = function(title) {
+  if (title == null) {
+    throw new Error("Can't create todo without title");
+  }
+  return $.ajax({
+    url: API_ENDPOINT,
+    method: 'POST',
+    contentType: 'application/json',
+    data: JSON.stringify({title: title})
+  }).then(function(createdTodo) {
+    todos.push(createdTodo);
+    return todos;
+  });
+};
+
 var updateTodo = function(todo) {
   if (todo == null || todo.id == null) {
     throw new Error("Can't update todo without id");
@@ -39,5 +54,6 @@ var setTodoDone = function(id, done) {
 
 module.exports = {
   listTodos: listTodos,
+  createTodo: createTodo,
   setTodoDone: setTodoDone
 };
