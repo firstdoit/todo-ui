@@ -65,24 +65,23 @@ var TodoApp = React.createClass({
     }.bind(this);
 
     // Send update to server
-    TodoAPI.setTodoDone(todoId, checked).fail(function(reason) {
-      console.log('Updating todo ' + todoId + ' failed', reason);
-      // Revert in case of problems
-      updateTodo(!checked)
-    });
-
-    // Update UI synchronously
-    updateTodo(checked);
+    try {
+      TodoAPI.setTodoDone(todoId, checked).fail(function(reason) {
+        console.log('Updating todo ' + todoId + ' failed', reason);
+        // Revert in case of problems
+        updateTodo(!checked)
+      });
+      // Update UI synchronously
+      updateTodo(checked);
+    } catch (e) {
+      console.error(e);
+    }
   },
 
   handleCheckAll: function() {
-    var todos = _.map(this.state.todos, function(t) {
-      t.done = true;
-      return t;
-    });
-    this.setState({
-      todos: todos
-    });
+    _.each(this.state.todos, function(t) {
+      this.handleCheck(t.id, true);
+    }.bind(this));
   },
 
   render: function() {
