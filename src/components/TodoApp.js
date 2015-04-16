@@ -64,7 +64,7 @@ var TodoApp = React.createClass({
       TodoAPI.setTodoDone(todoId, checked).fail(function(reason) {
         console.log('Updating todo ' + todoId + ' failed', reason);
         // Revert in case of problems
-        updateTodo(!checked)
+        updateTodo(!checked);
       });
       // Update UI synchronously
       updateTodo(checked);
