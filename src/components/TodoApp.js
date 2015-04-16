@@ -1,6 +1,7 @@
 var $ = window.jQuery = require('jquery');
 var _ = require('underscore');
 var React = require('react/addons');
+var update = require('react/lib/update');
 var TodoInput = require('./TodoInput');
 var TodoItem = require('./TodoItem');
 var TodoFooter = require('./TodoFooter');
@@ -79,6 +80,28 @@ var TodoApp = React.createClass({
     }.bind(this));
   },
 
+  moveTodo: function (id, afterId) {
+    var todos = this.state.todos;
+
+    var todo = _.filter(todos, function (c) {
+      return c.id === id;
+    })[0];
+    var afterTodo = _.filter(todos, function (c) {
+      return c.id === afterId;
+    })[0];
+    var todoIndex = todos.indexOf(todo);
+    var afterIndex = todos.indexOf(afterTodo);
+
+    this.setState(update(this.state, {
+      todos: {
+        $splice: [
+          [todoIndex, 1], //remove from old position
+          [afterIndex, 0, todo] //add at new position
+        ]
+      }
+    }));
+  },
+
   render: function() {
     var todoNodes = _.map(this.state.todos, function(t) {
       return (
@@ -86,7 +109,8 @@ var TodoApp = React.createClass({
           done={t.done}
           key={t.id}
           id={t.id}
-          onCheck={this.handleCheck}/>
+          onCheck={this.handleCheck}
+          moveTodo={this.moveTodo}/>
       );
     }.bind(this));
 
