@@ -9,13 +9,19 @@ var dragSource = {
   beginDrag: function(component) {
     return {
       item: {
-        id: component.props.id
+        id: component.props.id,
+        title: component.props.title
       }
     };
+  },
+  endDrag: function(component) {
+    component.props.endMoveTodo(component.props.id);
   }
 };
 
 var dropTarget = {
+  // item is currently dragged todo
+  // component is the target area
   over: function(component, item) {
     component.props.moveTodo(item.id, component.props.id);
   }

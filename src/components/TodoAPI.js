@@ -1,5 +1,6 @@
 var $ = require('jquery');
 var _ = require('underscore');
+var update = require('react/lib/update');
 
 var API_ENDPOINT = 'https://tt-todo-api.herokuapp.com/api/todos/';
 
@@ -52,8 +53,29 @@ var setTodoDone = function(id, done) {
   return updateTodo(todo);
 };
 
+var moveTodo = function(id, newIndex) {
+  if (id == null) {
+    throw new Error("Can't update todo without id");
+  }
+  if (newIndex == null) {
+    throw new Error("Can't move todo without index");
+  }
+  var todo = _.findWhere(todos, {id: id});
+  todo.$index = newIndex;
+  return updateTodo(todo).done(function(){
+    // Update our list to match new state
+    todos = update(todos, {
+      $splice: [
+        [_.indexOf(todos, todo), 1], //remove dragged from old position
+        [newIndex, 0, todo] //add at target position
+      ]
+    });
+  });
+};
+
 module.exports = {
   listTodos: listTodos,
   createTodo: createTodo,
-  setTodoDone: setTodoDone
+  setTodoDone: setTodoDone,
+  moveTodo: moveTodo
 };

@@ -80,23 +80,29 @@ var TodoApp = React.createClass({
     }.bind(this));
   },
 
-  moveTodo: function (id, afterId) {
+  endMoveTodo: function (id) {
+    var index = _.findIndex(this.state.todos, function(t) {
+      return t.id == id;
+    });
+    TodoAPI.moveTodo(id, index);
+  },
+
+  moveTodo: function (draggedId, targetId) {
     var todos = this.state.todos;
 
-    var todo = _.filter(todos, function (c) {
-      return c.id === id;
+    var todo = _.filter(todos, function (t) {
+      return t.id === draggedId;
     })[0];
-    var afterTodo = _.filter(todos, function (c) {
-      return c.id === afterId;
-    })[0];
-    var todoIndex = todos.indexOf(todo);
-    var afterIndex = todos.indexOf(afterTodo);
+    var todoIndex = _.indexOf(todos, todo);
+    var targetIndex = _.findIndex(todos, function (t) {
+      return t.id === targetId;
+    });
 
     this.setState(update(this.state, {
       todos: {
         $splice: [
-          [todoIndex, 1], //remove from old position
-          [afterIndex, 0, todo] //add at new position
+          [todoIndex, 1], //remove dragged from old position
+          [targetIndex, 0, todo] //add at target position
         ]
       }
     }));
@@ -110,7 +116,8 @@ var TodoApp = React.createClass({
           key={t.id}
           id={t.id}
           onCheck={this.handleCheck}
-          moveTodo={this.moveTodo}/>
+          moveTodo={this.moveTodo}
+          endMoveTodo={this.endMoveTodo}/>
       );
     }.bind(this));
 
