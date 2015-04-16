@@ -9,8 +9,12 @@ var TodoItem = React.createClass({
   },
 
   render: function() {
+    var className = "todo-item row";
+    if (this.props.done) {
+      className += " done";
+    }
     return (
-      <li className="todo-item row">
+      <li className={className}>
         <div className="checkbox col-sm-12">
           <input onChange={this.handleCheck}
             type="checkbox"
@@ -18,6 +22,7 @@ var TodoItem = React.createClass({
             id={'todo-' + this.props.id}
             checked={this.props.done}/>
           <label htmlFor={'todo-' + this.props.id}>{this.props.title}</label>
+          <i className="glyphicon glyphicon-resize-vertical pull-right"></i>
         </div>
       </li>
     );
