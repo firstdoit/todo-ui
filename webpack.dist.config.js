@@ -3,7 +3,7 @@ var webpack = require('webpack');
 module.exports = {
 
   output: {
-    publicPath: '/assets/',
+    publicPath: 'assets/',
     path: 'dist/assets/',
     filename: 'main.js'
   },
