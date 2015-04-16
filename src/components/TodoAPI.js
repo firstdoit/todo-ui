@@ -41,6 +41,13 @@ var updateTodo = function(todo) {
   });
 };
 
+var removeTodo = function(id) {
+  return $.ajax({
+    url: API_ENDPOINT + id,
+    method: 'DELETE'
+  });
+};
+
 var setTodoDone = function(id, done) {
   if (id == null) {
     throw new Error("Can't update todo without id");
@@ -77,5 +84,6 @@ module.exports = {
   listTodos: listTodos,
   createTodo: createTodo,
   setTodoDone: setTodoDone,
-  moveTodo: moveTodo
+  moveTodo: moveTodo,
+  removeTodo: removeTodo
 };

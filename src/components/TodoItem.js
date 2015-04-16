@@ -39,8 +39,12 @@ var TodoItem = React.createClass({
     }
   },
 
-  handleCheck: function () {
+  handleCheck: function() {
     this.props.onCheck(this.props.id, this.refs.checkbox.getDOMNode().checked);
+  },
+
+  handleRemoveClick: function() {
+    this.props.onRemove(this.props.id);
   },
 
   render: function() {
@@ -65,7 +69,10 @@ var TodoItem = React.createClass({
             id={'todo-' + this.props.id}
             checked={this.props.done}/>
           <label htmlFor={'todo-' + this.props.id}>{this.props.title}</label>
-          <i className="glyphicon glyphicon-resize-vertical pull-right"></i>
+          <div className="controls pull-right">
+            <button onClick={this.handleRemoveClick} className="btn btn-link ">Remove</button>
+            <i className="glyphicon glyphicon-resize-vertical"></i>
+          </div>
         </div>
       </li>
     );
