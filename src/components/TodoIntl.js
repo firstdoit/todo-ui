@@ -22,7 +22,7 @@ var messages = {
   "sv-SE": {
     "title": "Uppgiftslista",
     "inputPlaceholder": "Vad behöver göras?",
-    "addTodo": "Tillägga",
+    "addTodo": "Lägg till",
     "markAsComplete": "Markera allt som komplett",
     "remove": "Ta bort",
     "itemsLeft": "{items, plural,\n  =0 {Hurra! Ingenting här}\n  =1 {En uppgift kvar}\n  other {# uppgifter kvar}\n}\n"
