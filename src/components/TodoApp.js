@@ -87,17 +87,9 @@ var TodoApp = React.createClass({
 
   handleRemove: function(todoId) {
     TodoAPI.removeTodo(todoId).done(function() {
-      var todoIndex = _.findIndex(this.state.todos, function (t) {
-        return t.id === todoId;
+      this.setState({
+        todos: TodoAPI.getTodos()
       });
-
-      this.setState(update(this.state, {
-        todos: {
-          $splice: [
-            [todoIndex, 1] //remove
-          ]
-        }
-      }));
     }.bind(this));
   },
 

@@ -7,6 +7,10 @@ var API_ENDPOINT = 'https://tt-todo-api.herokuapp.com/api/todos/';
 // Local cache
 var todos = [];
 
+var getTodos = function() {
+  return todos;
+};
+
 var listTodos = function() {
   return $.get(API_ENDPOINT).then(function(result) {
     todos = result.todos;
@@ -91,6 +95,7 @@ var moveTodo = function(id, newIndex) {
 };
 
 module.exports = {
+  getTodos: getTodos,
   listTodos: listTodos,
   createTodo: createTodo,
   setTodoDone: setTodoDone,
