@@ -45,6 +45,16 @@ var removeTodo = function(id) {
   return $.ajax({
     url: API_ENDPOINT + id,
     method: 'DELETE'
+  }).done(function() {
+    var todoIndex = _.findIndex(todos, function (t) {
+      return t.id === id;
+    });
+    // Reconcile our state with the server
+    todos = update(todos, {
+      $splice: [
+        [todoIndex, 1] //remove
+      ]
+    })
   });
 };
 
