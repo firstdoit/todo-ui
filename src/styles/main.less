@@ -1,4 +1,6 @@
 .main {
+  z-index: 1;
+  position: relative;
   max-width: 500px;
   background-color: #fff;
 
@@ -26,6 +28,23 @@
 
     li {
       padding: 0 20px;
+    }
+  }
+}
+.i18n-select {
+  max-width: 500px;
+  padding: 1px;
+
+  .i18n-container {
+    z-index: 0;
+    position: relative;
+    background: #fff;
+    padding: 10px 7px 5px 7px;
+    margin-top: -5px;
+    border: 1px #ccc dashed;
+    border-radius: 5px;
+    select {
+      margin: 5px 0;
     }
   }
 }

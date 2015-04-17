@@ -1,6 +1,9 @@
 var React = require('react/addons');
 var DragDropMixin = require('react-dnd').DragDropMixin;
 var ItemTypes = require('./ItemTypes');
+var ReactIntl = require('react-intl');
+var IntlMixin = ReactIntl.IntlMixin;
+var FormattedMessage = ReactIntl.FormattedMessage;
 
 // CSS
 require('../styles/todo-item.less');
@@ -28,7 +31,7 @@ var dropTarget = {
 };
 
 var TodoItem = React.createClass({
-  mixins: [DragDropMixin],
+  mixins: [DragDropMixin, IntlMixin],
 
   statics: {
     configureDragDrop: function(register) {
@@ -70,7 +73,10 @@ var TodoItem = React.createClass({
             checked={this.props.done}/>
           <label htmlFor={'todo-' + this.props.id}>{this.props.title}</label>
           <div className="controls pull-right">
-            <button onClick={this.handleRemoveClick} className="btn btn-link ">Remove</button>
+            <button onClick={this.handleRemoveClick} className="btn btn-link ">
+              <FormattedMessage
+                message={this.getIntlMessage('remove')}/>
+            </button>
             <i className="glyphicon glyphicon-resize-vertical"></i>
           </div>
         </div>

@@ -1,6 +1,9 @@
 var $ = window.jQuery = require('jquery');
 var _ = require('underscore');
 var React = require('react/addons');
+var ReactIntl = require('react-intl');
+var IntlMixin = ReactIntl.IntlMixin;
+var FormattedMessage = ReactIntl.FormattedMessage;
 var update = require('react/lib/update');
 var TodoInput = require('./TodoInput');
 var TodoItem = require('./TodoItem');
@@ -12,6 +15,8 @@ require('../styles/tt-uikit-0.11.0.min.css');
 require('../styles/main.less');
 
 var TodoApp = React.createClass({
+  mixins: [IntlMixin],
+
   getInitialState: function() {
     return {
       todos: [],
@@ -141,7 +146,10 @@ var TodoApp = React.createClass({
     return (
       <div className='container main'>
         <header>
-          <h1>Todos</h1>
+          <h1>
+            <FormattedMessage
+              message={this.getIntlMessage('title')}/>
+          </h1>
         </header>
         <hr className="row"/>
         <TodoInput newTitle={this.state.newTitle}
